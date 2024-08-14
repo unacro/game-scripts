@@ -29,6 +29,7 @@ global playingCursor := 0
 global isPlaying := false
 
 PlayChapter() {
+    ; 可以随时终止的按键队列
     chapter := "SAFFG GHFA SAFFG GHG SAFFG GHFA SAFFGF SAFFG GHFA SAFFG GHGSAF FGGH FASAF FGF SAFFGGHFA SAFFGGHG SAFFGGHFA SAFFGF SAFFGGHFA SAFFGGHG SAFFGGHFA SAFFGF JHFSFGSF ASFJHFSFGSF JHFSFGSF ASFNABB AFGGFS FGHKGH FSFGGFS GFKH AFGGFS FGHKGH FDS SDFDF AFGGFS FGHKGH FSFGGFS GFKH AFGGFS FGHKGH FDS SDFDF SAF FG GH FA SAF FG GHG SAF FG GH FA SAF FGF SAF FG GH FA SAF FG GHG SAF FG GH FA SAF FGF"
     key := SubStr(chapter, playingCursor, 1)
     WinWaitActive(GAME_TITLE)
@@ -37,7 +38,7 @@ PlayChapter() {
     } else {
         ControlSend(key, , GAME_TITLE)
     }
-    global playingCursor := Mod(playingCursor + 1, StrLen(chapter))
+    global playingCursor := Mod(playingCursor + 1, StrLen(chapter)) ; 移动当前演奏进度的指针
     return
 }
 
@@ -91,7 +92,7 @@ F12:: {
     return
 }
 
-SC029:: { ; 即 `
+SC029:: { ; 即 ` / ~
     PlayPhrase("FS,N,SFS,N,S,") ; 解锁隐藏菜单 (O)
     return
 }
@@ -105,7 +106,7 @@ SC01A:: { ; 即 [
     global isPlaying := !isPlaying
     global playingCursor := 1
     if (isPlaying) {
-        SetTimer(PlayChapter, 50) ; 持续演奏 维持蓝色大气层
+        SetTimer(PlayChapter, 50) ; 持续演奏 维持蓝色大气层护盾
     } else {
         SetTimer(PlayChapter, 0)
     }
